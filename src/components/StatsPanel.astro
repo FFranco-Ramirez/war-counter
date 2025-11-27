@@ -1,0 +1,162 @@
+---
+// StatsPanel component
+// Display additional statistics with futuristic styling
+
+interface Props {
+  title: string;
+  value: string | number;
+  type?: 'circular' | 'line' | 'text';
+  unit?: string;
+}
+
+const { title, value, type = 'text', unit = '' } = Astro.props;
+---
+
+<div class="stats-panel">
+  <h3 class="panel-title">{title}</h3>
+  <div class="panel-content">
+    {type === 'text' && (
+      <div class="stat-value-container">
+        <span class="stat-value">{value}</span>
+        {unit && <span class="stat-unit">{unit}</span>}
+      </div>
+    )}
+    {type === 'circular' && (
+      <div class="circular-stat">
+        <svg class="circular-graph" viewBox="0 0 100 100">
+          <circle class="bg-circle" cx="50" cy="50" r="45" />
+          <circle class="progress-circle" cx="50" cy="50" r="45" style={`--progress: ${value}`} />
+        </svg>
+        <div class="circular-value">{value}%</div>
+      </div>
+    )}
+    {type === 'line' && (
+      <div class="line-graph">
+        <div class="line-placeholder"></div>
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .stats-panel {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-cyan);
+    border-radius: var(--border-radius-sm);
+    background: rgba(0, 10, 20, 0.5);
+    box-shadow: var(--glow-sm);
+    min-width: 130px;
+  }
+
+  .panel-title {
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+
+  .panel-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stat-value-container {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--color-cyan);
+    text-shadow: 0 0 15px var(--color-cyan-glow);
+    font-family: var(--font-share-tech), monospace;
+  }
+
+  .stat-unit {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+  }
+
+  /* Circular graph */
+  .circular-stat {
+    position: relative;
+    width: 70px;
+    height: 70px;
+  }
+
+  .circular-graph {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .bg-circle {
+    fill: none;
+    stroke: rgba(0, 255, 255, 0.1);
+    stroke-width: 8;
+  }
+
+  .progress-circle {
+    fill: none;
+    stroke: var(--color-cyan);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: calc(283 - (283 * var(--progress) / 100));
+    filter: drop-shadow(0 0 8px var(--color-cyan-glow));
+  }
+
+  .circular-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-cyan);
+    font-family: var(--font-share-tech), monospace;
+  }
+
+  /* Line graph placeholder */
+  .line-graph {
+    width: 100%;
+    height: 60px;
+    position: relative;
+  }
+
+  .line-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--color-cyan) 20%,
+      var(--color-cyan) 40%,
+      transparent 60%,
+      var(--color-cyan) 80%,
+      transparent 100%
+    );
+    opacity: 0.3;
+    clip-path: polygon(
+      0% 80%, 10% 60%, 20% 70%, 30% 40%, 40% 50%,
+      50% 30%, 60% 45%, 70% 35%, 80% 55%, 90% 40%, 100% 60%
+    );
+  }
+
+  @media (max-width: 768px) {
+    .stats-panel {
+      padding: 1rem;
+      min-width: 150px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+    }
+  }
+</style>

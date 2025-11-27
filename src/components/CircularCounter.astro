@@ -1,0 +1,263 @@
+---
+// CircularCounter component
+// Displays the war duration in a futuristic circular design
+---
+
+<div class="circular-counter-container">
+  <div class="circular-counter">
+    <!-- Concentric rings -->
+    <div class="ring outer-ring"></div>
+    <div class="ring middle-ring"></div>
+    <div class="ring inner-ring"></div>
+    
+    <!-- Decorative dots around outer ring -->
+    <div class="decorative-dots">
+      <div class="dot" style="--angle: 0deg;"></div>
+      <div class="dot" style="--angle: 45deg;"></div>
+      <div class="dot" style="--angle: 90deg;"></div>
+      <div class="dot" style="--angle: 135deg;"></div>
+      <div class="dot" style="--angle: 180deg;"></div>
+      <div class="dot" style="--angle: 225deg;"></div>
+      <div class="dot" style="--angle: 270deg;"></div>
+      <div class="dot" style="--angle: 315deg;"></div>
+    </div>
+    
+    <!-- Counter content -->
+    <div class="counter-content">
+      <div class="time-display">
+        <div class="time-group">
+          <span class="time-value" id="months">00</span>
+          <span class="time-label">MONTHS</span>
+        </div>
+        <div class="time-group">
+          <span class="time-value" id="days">00</span>
+          <span class="time-label">DAYS</span>
+        </div>
+        <div class="time-group time-group-large">
+          <span class="time-value time-value-large" id="time">00:00:00</span>
+          <span class="time-label">HOURS / MINUTES / SECONDS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="counter-subtitle">
+    SINCE FEBRUARY 24, 2022
+  </div>
+</div>
+
+<style>
+  .circular-counter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+  }
+
+  .circular-counter {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Concentric rings */
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: solid var(--color-cyan);
+    pointer-events: none;
+  }
+
+  .outer-ring {
+    width: 100%;
+    height: 100%;
+    border-width: 3px;
+    opacity: 0.3;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .middle-ring {
+    width: 95%;
+    height: 95%;
+    border-width: 2px;
+    opacity: 0.5;
+  }
+
+  .inner-ring {
+    width: 90%;
+    height: 90%;
+    border-width: 2px;
+    opacity: 0.8;
+  }
+
+  /* Decorative dots */
+  .decorative-dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--color-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-cyan-glow);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-130px);
+    animation: blink 2s ease-in-out infinite;
+    animation-delay: calc(var(--angle) * 0.01s);
+  }
+
+  /* Counter content */
+  .counter-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .time-display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .time-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .time-group-large {
+    margin-top: 0.25rem;
+  }
+
+  .time-value {
+    font-family: var(--font-share-tech), 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-cyan);
+    text-shadow: 0 0 20px var(--color-cyan-glow);
+    line-height: 1;
+    letter-spacing: 0.05em;
+  }
+
+  .time-value-large {
+    font-size: 1.75rem;
+  }
+
+  .time-label {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+  }
+
+  .counter-subtitle {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
+    padding-top: 0.75rem;
+    text-align: center;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .circular-counter {
+      width: 320px;
+      height: 320px;
+    }
+
+    .dot {
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-160px);
+    }
+
+    .time-value {
+      font-size: 2rem;
+    }
+
+    .time-value-large {
+      font-size: 2.25rem;
+    }
+
+    .time-label {
+      font-size: 0.6rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .circular-counter {
+      width: 280px;
+      height: 280px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-140px);
+    }
+
+    .time-value {
+      font-size: 1.75rem;
+    }
+
+    .time-value-large {
+      font-size: 2rem;
+    }
+
+    .time-label {
+      font-size: 0.55rem;
+    }
+
+    .counter-subtitle {
+      font-size: 0.65rem;
+    }
+  }
+</style>
+
+<script>
+  import { calculateCounterData } from '../utils/counter-utils';
+
+  const WAR_START_DATE = new Date('2022-02-24T00:00:00');
+
+  function updateCounter() {
+    const now = new Date();
+    const data = calculateCounterData(WAR_START_DATE, now);
+
+    const monthsEl = document.getElementById('months');
+    const daysEl = document.getElementById('days');
+    const timeEl = document.getElementById('time');
+
+    if (monthsEl) {
+      monthsEl.textContent = data.months.toString().padStart(2, '0');
+    }
+    
+    if (daysEl) {
+      daysEl.textContent = data.days.toString().padStart(2, '0');
+    }
+    
+    if (timeEl) {
+      const hoursStr = data.hours.toString().padStart(2, '0');
+      const minutesStr = data.minutes.toString().padStart(2, '0');
+      const secondsStr = data.seconds.toString().padStart(2, '0');
+      timeEl.textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+    }
+  }
+
+  // Update counter every second
+  setInterval(updateCounter, 1000);
+  
+  // Initial update
+  updateCounter();
+</script>

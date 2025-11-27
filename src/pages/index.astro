@@ -1,31 +1,213 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import WarCounter from '../components/WarCounter.astro';
-import NewsTicker from '../components/NewsTicker.astro';
+import HUDPanel from '../components/HUDPanel.astro';
+import CircularCounter from '../components/CircularCounter.astro';
+import StatsPanel from '../components/StatsPanel.astro';
 ---
 
 <Layout>
-	<main class="flex-grow flex flex-col items-center justify-center p-4 relative overflow-hidden">
-		<!-- Background effects -->
-		<div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
-			<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/30 rounded-full blur-[120px]"></div>
-			<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-yellow-500/20 rounded-full blur-[120px]"></div>
-		</div>
+	<!-- Video Background -->
+	<video 
+		autoplay 
+		loop 
+		muted 
+		playsinline
+		id="bg-video"
+	>
+		<source src="/video/fondo.mp4" type="video/mp4">
+	</video>
 
-		<div class="text-center mb-6 z-10">
-			<h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-2 text-slate-300">
-				<span>UKRAINE</span>
-				<span class="text-slate-600 mx-4 font-thin">|</span>
-				<span>RUSSIA</span>
-			</h1>
-		</div>
+	<main class="main-container">
+		<!-- Main HUD Panel - HORIZONTAL LAYOUT -->
+		<HUDPanel>
+			<!-- Title -->
+			<div class="title-section">
+				<h1 class="main-title">
+					UKRAINE / RUSSIA CONFLICT DURATION
+				</h1>
+				<p class="subtitle">A Global Chronicle</p>
+			</div>
 
-		<WarCounter />
-		
-		<NewsTicker />
+			<!-- HORIZONTAL CONTENT: Counter on LEFT, Stats on RIGHT -->
+			<div class="horizontal-content">
+				<!-- Circular Counter - LEFT -->
+				<div class="counter-section">
+					<CircularCounter />
+				</div>
 
-		<footer class="mt-8 text-slate-600 text-sm">
-			<p>Tracking the duration of the ongoing conflict.</p>
+				<!-- Stats Panels - RIGHT -->
+				<div class="stats-section">
+					<StatsPanel 
+						title="DISPLACEMENT" 
+						value="6.5M" 
+						type="text"
+						unit="MILLIONS"
+					/>
+					<StatsPanel 
+						title="HUMANITARIAN AID" 
+						value="65" 
+						type="circular"
+					/>
+				</div>
+			</div>
+		</HUDPanel>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<p>Built with Astro.js & Tailwind CSS — 2025</p>
 		</footer>
 	</main>
 </Layout>
+
+<style>
+	#bg-video {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		object-fit: cover;
+		z-index: 0;
+	}
+
+	.main-container {
+		position: relative;
+		z-index: 1;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+	}
+
+	.title-section {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+
+	.main-title {
+		font-size: clamp(0.9rem, 2vw, 1.1rem);
+		font-weight: 900;
+		letter-spacing: 0.05em;
+		color: rgba(255, 255, 255, 0.9);
+		text-transform: uppercase;
+		margin: 0;
+		text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+	}
+
+	.subtitle {
+		font-size: clamp(0.55rem, 1vw, 0.65rem);
+		color: rgba(255, 255, 255, 0.6);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		margin: 0.25rem 0 0 0;
+	}
+
+	/* HORIZONTAL LAYOUT */
+	.horizontal-content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 2rem;
+		justify-content: center;
+	}
+
+	.counter-section {
+		flex-shrink: 0;
+	}
+
+	.stats-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		padding: 0.75rem 0;
+		color: rgba(255, 255, 255, 0.3);
+		font-size: 0.6rem;
+		letter-spacing: 0.1em;
+		z-index: 10;
+	}
+
+	@media (max-width: 768px) {
+		.horizontal-content {
+			flex-direction: column;
+			gap: 1rem;
+		}
+	}
+</style>
+
+<!-- Styles commented for testing -->
+<!-- 
+<style>
+	.main-container {
+		position: relative;
+		z-index: 1;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+	}
+
+	.title-section {
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+
+	.main-title {
+		font-size: clamp(1rem, 2.5vw, 1.25rem);
+		font-weight: 900;
+		letter-spacing: 0.05em;
+		color: rgba(255, 255, 255, 0.9);
+		text-transform: uppercase;
+		margin: 0;
+		text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+	}
+
+	.subtitle {
+		font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+		color: rgba(255, 255, 255, 0.6);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		margin: 0.35rem 0 0 0;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75rem;
+		margin: 1rem 0 0 0;
+		max-width: 100%;
+	}
+
+	.footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		padding: 1rem 0;
+		color: rgba(255, 255, 255, 0.3);
+		font-size: 0.65rem;
+		letter-spacing: 0.1em;
+		z-index: 10;
+	}
+
+	@media (max-width: 768px) {
+		.stats-grid {
+			grid-template-columns: 1fr;
+			max-width: 250px;
+			gap: 0.75rem;
+		}
+	}
+</style>
+-->

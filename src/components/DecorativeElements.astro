@@ -1,0 +1,51 @@
+---
+// DecorativeElements component
+// Adds floating dots, scan lines, and corner accents for futuristic feel
+---
+
+<div class="decorative-elements">
+  <!-- Floating dots -->
+  <div class="floating-dots">
+    <div class="floating-dot" style="--x: 10%; --y: 20%; --delay: 0s;"></div>
+    <div class="floating-dot" style="--x: 85%; --y: 15%; --delay: 2s;"></div>
+    <div class="floating-dot" style="--x: 15%; --y: 75%; --delay: 4s;"></div>
+    <div class="floating-dot" style="--x: 90%; --y: 80%; --delay: 1s;"></div>
+    <div class="floating-dot" style="--x: 50%; --y: 10%; --delay: 3s;"></div>
+  </div>
+</div>
+
+<style>
+  .decorative-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Floating dots */
+  .floating-dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .floating-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--color-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-cyan-glow);
+    left: var(--x);
+    top: var(--y);
+    animation: float 6s ease-in-out infinite, blink 3s ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0.6;
+  }
+
+
+</style>

@@ -1,0 +1,116 @@
+---
+// ActionButtons component
+// Futuristic styled action buttons
+
+interface ButtonConfig {
+  label: string;
+  href?: string;
+  onClick?: string;
+}
+
+const buttons: ButtonConfig[] = [
+  { label: 'EXPLORE INTERACTIVE TIMELINE', href: '#timeline' },
+  { label: 'VIEW LIVE UPDATES', href: '#updates' },
+  { label: 'SUPPORT RELIEF EFFORTS', href: '#donate' },
+];
+---
+
+<div class="action-buttons">
+  {buttons.map((btn) => (
+    btn.href ? (
+      <a href={btn.href} class="futuristic-button">
+        <span class="button-border"></span>
+        <span class="button-text">{btn.label}</span>
+      </a>
+    ) : (
+      <button class="futuristic-button" onclick={btn.onClick}>
+        <span class="button-border"></span>
+        <span class="button-text">{btn.label}</span>
+      </button>
+    )
+  ))}
+</div>
+
+<style>
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .futuristic-button {
+    position: relative;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid var(--color-cyan);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-cyan);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .futuristic-button:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: var(--glow-md);
+    transform: translateY(-2px);
+  }
+
+  .futuristic-button:active {
+    transform: translateY(0);
+  }
+
+  .button-border {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--border-radius-sm);
+    padding: 2px;
+    background: linear-gradient(45deg, var(--color-cyan), transparent, var(--color-cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .futuristic-button:hover .button-border {
+    opacity: 1;
+  }
+
+  .button-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .action-buttons {
+      gap: 1rem;
+    }
+
+    .futuristic-button {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .futuristic-button {
+      padding: 0.75rem 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+    }
+  }
+</style>
