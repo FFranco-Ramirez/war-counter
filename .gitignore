@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+.kiro/
+.vscode/
 
 # dependencies
 node_modules/
@@ -22,3 +24,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Large video files (now hosted on R2)
+public/video/
+
+Gemini_Generated_Image_x1bxdvx1bxdvx1bx.png
